@@ -5,6 +5,8 @@ const orderSchema = new mongoose.Schema(
     name: { type: String },
     phone: { type: String },
     shippingAddress: { type: String },
+    orderItems: [],
+    orderAmount: { type: Number },
     isDelivered: { type: Boolean, default: false },
     isPaid: { type: Boolean, default: false },
   },

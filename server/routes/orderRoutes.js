@@ -18,13 +18,15 @@ orderRouter.get("/:id", async (req, res) => {
 });
 
 orderRouter.post("/placeorders", async (req, res) => {
-  const { shippingAddress, phone, name } = req.body;
+  const { shippingAddress, phone, name, totalPrice, cartItems } = req.body;
 
   try {
     const newOrder = new Order({
       name: name,
       phone: phone,
       shippingAddress: shippingAddress,
+      orderItems: cartItems,
+      orderAmount: totalPrice,
     });
 
     const saveOrder = newOrder.save();

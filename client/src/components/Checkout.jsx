@@ -14,6 +14,8 @@ const Checkout = () => {
   const cartItems = cartState.cartItems;
   const navigate = useNavigate();
   const orderHandler = () => {
+    const reducePrice = cartItems.reduce((x, item) => x + item.price, 0);
+    const totalPrice = Number(reducePrice).toFixed(0);
     if (name === "" || phone === "" || shippingAddress === "") {
       toast.error("Field is empty");
     } else {
@@ -22,6 +24,8 @@ const Checkout = () => {
           name: name,
           phone: phone,
           shippingAddress: shippingAddress,
+          cartItems,
+          totalPrice,
         });
 
         console.log(data);

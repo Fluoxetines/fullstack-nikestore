@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { getOrderDetails } from "../../redux/actions/orderActions";
 import Navbar from "../Navbar";
 import "./index.scss";
 import Sidebar from "./Sidebar";
@@ -63,13 +62,12 @@ const OrderAdmin = () => {
           <table className="table-orders">
             <thead>
               <tr>
-                <th>ID</th>
                 <th>Full Name</th>
                 <th>Phone</th>
                 <th>Address</th>
-                {/* <th>Quantity</th>
+                <th>Product</th>
+                <th>Quantity</th>
                 <th>Price</th>
-                <th>Product</th> */}
                 <th>Date</th>
                 <th>Actions</th>
               </tr>
@@ -94,26 +92,54 @@ const OrderAdmin = () => {
                     <>
                       {/* Map phần order */}
                       <tr key={item.name}>
-                        <td>{item._id}</td>
-                        <td>{item.name.replace(/['‘’"“”]/g, "")}</td>
+                        <td className="max-w-[200px] whitespace-pre-wrap lg:max-w-full">
+                          {item.name.replace(/['‘’"“”]/g, "")}
+                        </td>
                         <td>{item.phone.replace(/['‘’"“”]/g, "")}</td>
                         <td>
                           <div className="max-w-[200px] whitespace-pre-wrap lg:max-w-full">
                             {item.shippingAddress.replace(/['‘’"“”]/g, "")}
                           </div>
                         </td>
-                        <td>{item.createdAt.substring(0, 10)}</td>
                         {/* Map phần cartItems */}
-                        {/*  <>
-                          {item.orderItems.map((order) => (
-                            <>
-                              <td>{order.cartQuantity}</td>
+                        <>
+                          <div className="flex flex-col">
+                            {item.orderItems.map((order) => (
+                              <>
+                                <td className="max-w-[200px] whitespace-pre-wrap lg:max-w-full">
+                                  {order.name}
+                                </td>
+                                {/* <td>{order.cartQuantity}</td>
                               <td>{order.price * order.cartQuantity}</td>
-                              <td>{order.name}</td>
+                              <td>{item.createdAt.substring(0, 10)}</td> */}
+                              </>
+                            ))}
+                          </div>
+                          <div className="flex flex-col">
+                            {item.orderItems.map((order) => (
+                              <>
+                                <td>{order.cartQuantity}</td>
+                                {/* 
+                              <td>{order.price * order.cartQuantity}</td>
+                              <td>{item.createdAt.substring(0, 10)}</td> */}
+                              </>
+                            ))}
+                          </div>
+                          <div className="flex flex-col justify-center">
+                            {item.orderItems.map((order) => (
+                              <>
+                                <td>${order.price * order.cartQuantity}</td>
+                                {/* 
+                              <td>{item.createdAt.substring(0, 10)}</td> */}
+                              </>
+                            ))}
+                          </div>
+                          {item.orderItems.slice(0, 1).map((order) => (
+                            <>
                               <td>{item.createdAt.substring(0, 10)}</td>
                             </>
                           ))}
-                        </> */}
+                        </>
                         <td>
                           <div className="flex items-center">
                             <button
@@ -122,7 +148,6 @@ const OrderAdmin = () => {
                                   `/admin/orders/update-order/${item._id}`
                                 )
                               }
-                              className="rounded bg-blue-400 px-3 py-1 text-white"
                             >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -140,7 +165,7 @@ const OrderAdmin = () => {
                               </svg>
                             </button>
                             <button
-                              className="ml-4 rounded bg-red-500 px-3 py-1 text-white"
+                              className="ml-4"
                               onClick={() => handleSubmit(item._id)}
                             >
                               <svg
