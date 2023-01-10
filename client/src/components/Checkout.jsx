@@ -11,21 +11,20 @@ const Checkout = () => {
   const [shippingAddress, setShippingAddress] = useState("");
   const cartState = useSelector((state) => state.cartReducer);
   const [money, setMoney] = useState(0);
+  const [order, setOrder] = useState([]);
   const cartItems = cartState.cartItems;
   const navigate = useNavigate();
   const orderHandler = () => {
-    const reducePrice = cartItems.reduce((x, item) => x + item.price, 0);
-    const totalPrice = Number(reducePrice).toFixed(0);
     if (name === "" || phone === "" || shippingAddress === "") {
       toast.error("Field is empty");
     } else {
+      const orderID = order.at(-1).orderID + 1;
       try {
         const { data } = axios.post(`/api/orders/placeorders`, {
           name: name,
           phone: phone,
           shippingAddress: shippingAddress,
-          cartItems,
-          totalPrice,
+          orderID,
         });
 
         console.log(data);
@@ -50,6 +49,35 @@ const Checkout = () => {
     }
     updateMoney();
   }, [cartItems]);
+
+  const handleSubmit = () => {
+    cartItems.forEach((element) => {
+      try {
+        const orderID = order.at(-1).orderID + 1;
+        const { data } = axios.post(`/api/ordersdetail`, {
+          orderID,
+          productID: element._id,
+          quantity: element.cartQuantity,
+          price: element.price,
+        });
+        console.log(data);
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  };
+
+  useEffect(() => {
+    const getOrder = async () => {
+      try {
+        const { data } = await axios.get(`/api/orders`);
+        setOrder(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getOrder();
+  }, []);
 
   return (
     <div>
@@ -88,7 +116,10 @@ const Checkout = () => {
                 />
               </div>
               <button
-                onClick={orderHandler}
+                onClick={() => {
+                  orderHandler();
+                  handleSubmit();
+                }}
                 className="my-2 inline-block h-11 w-full rounded bg-gradient-to-r from-violet-500 to-fuchsia-500 text-center capitalize text-white"
               >
                 Submit

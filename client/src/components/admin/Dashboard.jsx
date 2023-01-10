@@ -7,49 +7,57 @@ const Dashboard = () => {
   const [user, setUser] = useState([]);
   const [order, setOrder] = useState([]);
   const [products, setProducts] = useState([]);
+  const [orderDetails, setOrderDetails] = useState([]);
   const [totalMoney, setTotalMoney] = useState(0);
 
-  const getAllUser = async () => {
-    try {
-      const { data } = await axios.get(`/api/users`);
-      setUser(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const getAllOrder = async () => {
-    try {
-      const { data } = await axios.get(`/api/orders`);
-      setOrder(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const getAllProduct = async () => {
-    try {
-      const { data } = await axios.get(`/api/products`);
-      setProducts(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   useEffect(() => {
-    /* function updateMoney() {
-      let total = 0;
-      for (let i = 0; i < order.length; i++) {
-        total +=
-          order[i].orderItems[0].cartQuantity * order[i].orderItems[0].price;
+    const getAllUser = async () => {
+      try {
+        const { data } = await axios.get(`/api/users`);
+        setUser(data);
+      } catch (err) {
+        console.log(err);
       }
-      setTotalMoney(total);
-    } */
+    };
+    const getAllOrder = async () => {
+      try {
+        const { data } = await axios.get(`/api/orders`);
+        setOrder(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    const getAllProduct = async () => {
+      try {
+        const { data } = await axios.get(`/api/products`);
+        setProducts(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    const getOrderDetails = async () => {
+      try {
+        const { data } = await axios.get(`/api/ordersdetail`);
+        setOrderDetails(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
     getAllUser();
     getAllProduct();
     getAllOrder();
-    /* updateMoney(); */
+    getOrderDetails();
   }, []);
+  useEffect(() => {
+    const updateMoney = () => {
+      let total = 0;
+      for (let i = 0; i < orderDetails.length; i++) {
+        total += orderDetails[i].price * orderDetails[i].quantity;
+      }
+      setTotalMoney(total);
+    };
+    updateMoney();
+  });
 
   return (
     <>

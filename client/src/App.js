@@ -21,6 +21,7 @@ import PrivateRoute from "./components/profile/PrivateRoute";
 import Checkout from "./components/Checkout";
 import OrderAdmin from "./components/admin/OrderAdmin";
 import UpdateOrder from "./components/admin/UpdateOrder";
+import OrderDetails from "./components/admin/OrderDetails";
 const App = () => {
   return (
     <>
@@ -101,6 +102,14 @@ const App = () => {
             element={
               <AdminRoute>
                 <OrderAdmin />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/orders-detail"
+            element={
+              <AdminRoute>
+                <OrderDetails />
               </AdminRoute>
             }
           />

@@ -40,8 +40,6 @@ const OrderAdmin = () => {
     getOrder();
   }, []);
 
-  console.log(data);
-
   return (
     <div>
       <>
@@ -65,9 +63,6 @@ const OrderAdmin = () => {
                 <th>Full Name</th>
                 <th>Phone</th>
                 <th>Address</th>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Price</th>
                 <th>Date</th>
                 <th>Actions</th>
               </tr>
@@ -101,48 +96,11 @@ const OrderAdmin = () => {
                             {item.shippingAddress.replace(/['‘’"“”]/g, "")}
                           </div>
                         </td>
-                        {/* Map phần cartItems */}
-                        <>
-                          <div className="flex flex-col">
-                            {item.orderItems.map((order) => (
-                              <>
-                                <td className="max-w-[200px] whitespace-pre-wrap lg:max-w-full">
-                                  {order.name}
-                                </td>
-                                {/* <td>{order.cartQuantity}</td>
-                              <td>{order.price * order.cartQuantity}</td>
-                              <td>{item.createdAt.substring(0, 10)}</td> */}
-                              </>
-                            ))}
-                          </div>
-                          <div className="flex flex-col">
-                            {item.orderItems.map((order) => (
-                              <>
-                                <td>{order.cartQuantity}</td>
-                                {/* 
-                              <td>{order.price * order.cartQuantity}</td>
-                              <td>{item.createdAt.substring(0, 10)}</td> */}
-                              </>
-                            ))}
-                          </div>
-                          <div className="flex flex-col justify-center">
-                            {item.orderItems.map((order) => (
-                              <>
-                                <td>${order.price * order.cartQuantity}</td>
-                                {/* 
-                              <td>{item.createdAt.substring(0, 10)}</td> */}
-                              </>
-                            ))}
-                          </div>
-                          {item.orderItems.slice(0, 1).map((order) => (
-                            <>
-                              <td>{item.createdAt.substring(0, 10)}</td>
-                            </>
-                          ))}
-                        </>
+                        <td>{item.createdAt.substring(0, 10)}</td>
                         <td>
                           <div className="flex items-center">
                             <button
+                              className="rounded bg-blue-400 px-3 py-1 text-white"
                               onClick={() =>
                                 navigate(
                                   `/admin/orders/update-order/${item._id}`
@@ -165,7 +123,7 @@ const OrderAdmin = () => {
                               </svg>
                             </button>
                             <button
-                              className="ml-4"
+                              className="ml-4 rounded bg-red-500 px-3 py-1 text-white"
                               onClick={() => handleSubmit(item._id)}
                             >
                               <svg
