@@ -58,7 +58,7 @@ const Checkout = () => {
           orderID,
           productID: element._id,
           quantity: element.cartQuantity,
-          price: element.price,
+          price: element.price * element.cartQuantity,
         });
         console.log(data);
       } catch (err) {

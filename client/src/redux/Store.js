@@ -5,7 +5,6 @@ import cartReducer from "./reducer/cartReducer.js";
 import registerUserReducer from "./reducer/userReducer.js";
 import loginUserReducer from "./reducer/userReducer.js";
 import placeOrderReducer from "./reducer/orderReducer.js";
-import getUserOrdersReducer from "./reducer/orderReducer.js";
 import getAllProduct from "./reducer/productReducer.js";
 
 const finalReducer = combineReducers({
@@ -14,7 +13,6 @@ const finalReducer = combineReducers({
   registerUserReducer: registerUserReducer,
   loginUserReducer: loginUserReducer,
   placeOrderReducer: placeOrderReducer,
-  getUserOrdersReducer: getUserOrdersReducer,
 });
 
 const cartItems = localStorage.getItem("cartItems")

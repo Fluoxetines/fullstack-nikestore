@@ -11,17 +11,4 @@ const placeOrderReducer = (state = {}, action) => {
   }
 };
 
-const getUserOrdersReducer = (state = { orders: [] }, action) => {
-  switch (action.type) {
-    case "GET_USER_ORDERS_REQUEST":
-      return { loading: true, ...state };
-    case "GET_USER_ORDERS_SUCCESS":
-      return { loading: false, orders: action.payload };
-    case "GET_USER_ORDERS_FAIL":
-      return { loading: false };
-    default:
-      return state;
-  }
-};
-
-export default (placeOrderReducer, getUserOrdersReducer);
+export default placeOrderReducer;

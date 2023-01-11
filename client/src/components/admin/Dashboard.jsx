@@ -52,7 +52,7 @@ const Dashboard = () => {
     const updateMoney = () => {
       let total = 0;
       for (let i = 0; i < orderDetails.length; i++) {
-        total += orderDetails[i].price * orderDetails[i].quantity;
+        total += orderDetails[i].price;
       }
       setTotalMoney(total);
     };
